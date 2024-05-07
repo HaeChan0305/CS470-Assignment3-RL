@@ -17,19 +17,19 @@
 
 ## Assignment 3
 ### Problem 1: Markov Decision Process [50 pts]
-In this section, you design a Markov decision process (MDP) for a toy environment, called <i>gridworld</i>, which is often used for reinforcement learning (RL). The environment is a stochastic version of the pre-built discrete <i>gridworld</i> environment from <i>OpenAI Gym</i>. In order to represent a task in the environment, you define an MDP, $< S,A,T,r,γ >$, where $S$, $A$, $T$, $r$ ,and $γ$ are states, actions, transition probabilities, a reward function, and a discount factor, respectively. We particularly use a 8 × 10 size of <i>gridworld</i> environment, where the coordinate of left-top and right-bottom cells are [0,0] and [7,9], respectively. An agent can move onto one of the four nearest cells or stay. Please, fill your code in the blank section following the “PLACE YOUR CODE HERE” comments in the CS470_Assignment3_problem.ipynb file following the subproblems below.
+In this section, you design a Markov decision process (MDP) for a toy environment, called <i>gridworld</i>, which is often used for reinforcement learning (RL). The environment is a stochastic version of the pre-built discrete <i>gridworld</i> environment from <i>OpenAI Gym</i>. In order to represent a task in the environment, you define an MDP, $< S,A,T,r,γ >$, where $S$, $A$, $T$, $r$ ,and $γ$ are states, actions, transition probabilities, a reward function, and a discount factor, respectively. We particularly use a 8 × 10 size of <i>gridworld</i> environment, where the coordinate of left-top and right-bottom cells are [0,0] and [7,9], respectively. An agent can move onto one of the four nearest cells or stay. Please, fill your code in the blank section following the <b>“PLACE YOUR CODE HERE”</b> comments in the <b>CS470_Assignment3_problem.ipynb</b> file following the subproblems below.
 
 
 <b>TRANSITION MODEL</b>: Implement a stochastic <b>transition_model()</b> of the environment dynamics. You need to fill out the <b>transition_model()</b> function, which returns a list of transition probabilities over the next states given a state and an action. In order to define the transition model, you have to consider following rules:
 
 - The agent has five possible movements: stay, up, down, left, and right (see Fig.1),
 - The agent is not allowed to move off the grid or move on an obstacle (grey); If the agent tries to move off the grid or move on an obstacle, it will end up staying at the previous cell,
-- The agent applies a selected action with a probability 1 − ε,
-- The agent (uniform) randomly applies an action among unselected actions with a (noise) probability ε/4,
+- The agent applies a selected action with a probability $1 − ε$,
+- The agent (uniform) randomly applies an action among unselected actions with a (noise) probability $ε/4$,
 - The agent terminates the episode when it reaches goal or trap (red) cells, and
 - The agent cannot leave goal or obstacle cells.
 
-Note that we use predefined ε = 0.05 on the assignment IPython notebook.
+Note that we use predefined $ε = 0.05$ on the assignment IPython notebook.
 
 <img src="/Figure/Figure1.png" width="50%" height="50%">
 
@@ -65,10 +65,11 @@ Finally, you are ready to make your agent interact with the environment for RL. 
 In this problem, you implement and analyze a representative DP algorithm: value iteration (VI).
 
 #### 2.1. Value Iteration (VI) [30 pts]
-Implement the VI algorithm for the stochastic gridworld environment by filling out the ValueIteration class. The VI algorithm iteratively and directly updates each state value $V_t(s)$ at a time step t given a transition model T:
+Implement the VI algorithm for the stochastic gridworld environment by filling out the ValueIteration class. The VI algorithm iteratively and directly updates each state value $V_t(s)$ at a time step t given a transition model $T$:
 
+<img src="/Figure/equation1.png" width="50%" height="50%">
 
-<img src="/Figure/CNN_structure.png" width="50%" height="50%">
+VI stops to update the values when the maximum update error ∆ is lower than a certain threshold θ, where $∆ ← max(∆, ∥Vt+1(s) − Vt(s)∥) ∀s ∈ S$. (See details on the RL book p.83.) On your report, please
 
 where the convolution layer is with bias=True, which needs to be accounted for calculating the number of parameters.
 All other arguments use default values. You will also implement forward and backward passes to optimize CNN by using stochastic gradient descent (SGD) with a momentum method. Note that your test accuracy should be over 90.2% on the test images.
