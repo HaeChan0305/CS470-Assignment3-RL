@@ -93,49 +93,70 @@ On your report, please
 
 
 ### Results
-#### 1.1 Convolution and Average Pooling using NumPy
-As same reason, results of Filter 2 (takes other values on vertical line) and Filter 3(takes other values on other diagonal) look spread in vertical and reverse diagonal direction respectively.
-In case of Average Pooling, it makes 4 parameters to 1 parameter by averaging them. That means the image information is compressed and also lost. That is reason why the results look more blurry.
+#### 1. Markov Decision Process [50 pts]
+1. [15 pts] print out the transition probabilities to all the next states given
+  - a current state [3, 1] and a selected action “Down”,
 
-<center><img src="/Figure/visualization1.png" width="50%" height="50%"></center>
+    <center><img src="/Figure/answer1.png" width="50%" height="50%"></center>
+  
+  - a current state [0, 6] and a selected action “Right”,
 
-<center><img src="/Figure/visualization2.png" width="50%" height="50%"></center>
+    <center><img src="/Figure/answer2.png" width="50%" height="50%"></center>
+  
+  - a current state [3, 5] and a selected action “Right”,
+
+    <center><img src="/Figure/answer3.png" width="50%" height="50%"></center>
+
+2. [5 pts] plot the resulting histogram of returns produced by a dummy policy in the IPython notebook for 100 episodes,
+
+   <center><img src="/Figure/histogram.png" width="50%" height="50%"></center>
 
   
-#### 1.2 Convolution and Average Pooling using PyTorch
-I define the error between two kinds of methods as euclidean distance between two results. The euclidean distance between numpy output and pytorch output by each example and each filter can be shown below. we can know that both are almost same.
+#### 2.1. Value Iteration (VI) [30 pts]
+1. write down the state values of the first 8 states of the gridworld environment1,
 
-<center><img src="/Figure/visualization3.png" width="50%" height="50%"></center>
+  <center><img src="/Figure/answer4.png" width="50%" height="50%"></center>
+   
+2. overlay the best action at each state based on the state-action values,
+  
+  <center><img src="/Figure/answer5.png" width="50%" height="50%"></center>
 
-<center><img src="/Figure/distance.png" width="50%" height="50%"></center>
+3. plot the distribution of trajectories produced by the trained policy for 100 episodes, and
 
-#### 2.1 A CNN with MaxPooling layers
-Let the input image size as (1, 28, 28).
-- (Layer 1) Conv2d-1 (32, 3, 3) → 32 * 3 * 3 + 32 = 320 parameters
-- (Layer 3) Conv2d-2 (64, 3, 3) → 64 * 32 * 3 * 3 + 64 = 18,496 parameters
-- (Layer 6) Linear-1 (64, 30976) → 64 * 30976 + 64 = 1,982,528 parameters
-- (Layer 7) Linear-2 (32, 64) → 32 * 64 + 32 = 2,080 parameters
-- (Layer 8) Linear-3 (10, 32) → 10 * 32 + 10 = 330 parameters
-Number of total parameters is 2,003,754.
+<center><img src="/Figure/answer6.png" width="50%" height="50%"></center>
 
-<center><img src="/Figure/training_history.png" width="50%" height="50%"></center>
 
-#### 2.2 Prevention of Overfitting
-I used two methods(weight decay and dropout) to prevent overfitting. As we can see from training-validation accuracies and loss graph, the gap of accuracies and loss between training and validation with two methods is less than the gap without them. Also, the accuracy on the test images is quite increased.
+#### 2.2. Comparison under different transition models [20 pts]
+1. plot the expected returns per ε value with respect to the number of iterations until convergence (two graphs or one unified graph),
+  - ε = 0.1
 
-<center><img src="/Figure/training_history2.png" width="50%" height="50%"></center>
+    <center><img src="/Figure/answer7.png" width="50%" height="50%"></center>
 
-The below explains why each two methods can prevent overfitting.
-- Weight decay(1e-5)
-  - By using Weight decay to set the lower bound of loss value, parameters can be prevented from being excessively      updated (i.e., overfitting).
+  - ε = 0.4
 
-- Drop out(p = 0.7)
-  - Dropout prevents the corresponding parameter from being updated at that point by making certain parameters zero with the probability of p. That is, the number of times parameters are updated is reduced in probability, preventing overfitting.
+    <center><img src="/Figure/answer8.png" width="50%" height="50%"></center>
 
-#### 3. Comparison of MLP and CNN
-For reasonable comparison, I tried to make numbers of total trainable parameters of both model same. The CNN model has 2,003,754 parameters and the MLP model has 2,005,610 parameters. Although the number of parameters are similar, the accuracy on test images of the CNN and MLP are 91.48% and 80.54%, respectively. I think the reason why the accuracy gap exists is affect of locality. The CNN model can consider locality information of input images. In the other hands, the MLP model can’t refer their locality information because they make input images flatten immediately when they come in the model. That is reason why CNN is powerful than MLP in image task.
+2. overlaying the best actions at each state per ε value (two visualizations),
+  - ε = 0.1
 
-<center><img src="/Figure/comparison.png" width="50%" height="50%"></center>
+    <center><img src="/Figure/answer9.png" width="50%" height="50%"></center>
+
+  - ε = 0.4
+
+    <center><img src="/Figure/answer10.png" width="50%" height="50%"></center>
+
+3. plot the distribution of trajectories produced by the trained policy for 100 episodes per ε value (two visualizations), and
+  - ε = 0.1
+
+    <center><img src="/Figure/answer11.png" width="50%" height="50%"></center>
+
+  - ε = 0.4
+
+    <center><img src="/Figure/answer12.png" width="50%" height="50%"></center>
+
+4. compare/analyze the effect of different ε based on the above results.
+  - As shown in the two plots of trajectories for each epsilon value, there are some unnessesary paths where epslion is 0.4. This is because eplison represents the level of uncertainty that the agent do exactly chosen action, so a lager eplison may cause the agent to take unexpected actions with high probability. In addition, for high epsilon values, it is not guaranteed to reach the maximum reward consistently as the Value iteration progresses.
+
 
 # ETC
 For educational purpose only. This software cannot be used for any re-distribution with or without modification. The lecture notebook files are copied or modified from the material of Siamak Ravanbakhsh. 
