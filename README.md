@@ -19,6 +19,7 @@
 ### Problem 1: Markov Decision Process [50 pts]
 In this section, you design a Markov decision process (MDP) for a toy environment, called <i>gridworld</i>, which is often used for reinforcement learning (RL). The environment is a stochastic version of the pre-built discrete <i>gridworld</i> environment from <i>OpenAI Gym</i>. In order to represent a task in the environment, you define an MDP, < S,A,T,r,γ >, where S, A, T, r ,and γ are states, actions, transition probabilities, a reward function, and a discount factor, respectively. We particularly use a 8 × 10 size of <i>gridworld</i> environment, where the coordinate of left-top and right-bottom cells are [0,0] and [7,9], respectively. An agent can move onto one of the four nearest cells or stay. Please, fill your code in the blank section following the “PLACE YOUR CODE HERE” comments in the CS470_Assignment3_problem.ipynb file following the subproblems below.
 
+
 <b>TRANSITION MODEL</b>: Implement a stochastic <b>transition_model()</b> of the environment dynamics. You need to fill out the <b>transition_model()</b> function, which returns a list of transition probabilities over the next states given a state and an action. In order to define the transition model, you have to consider following rules:
 
 - The agent has five possible movements: stay, up, down, left, and right (see Fig.1),
@@ -31,9 +32,13 @@ In this section, you design a Markov decision process (MDP) for a toy environmen
 Note that we use predefined ε = 0.05 on the assignment IPython notebook.
 
 <img src="/Figure/Figure1.png" width="50%" height="50%">
+
 Figure 1: An exemplar <i>gridworld</i> environment with available actions. An agent cannot move on an obstacle (grey). An episode ends when the agent reaches either a trap (red) cell or a goal (green) cell. In this environment, the cell with index 1 and 78 corresponds to [1, 0] and [6, 9], respectively.
 
+
+
 <b>REWARD FUNCTION</b>: Design a reward function by filling out the <b>compute_reward(s,a,s’)</b> function, where the arguments represent a current state, an action, and a next state. The function returns a positive reward <i>+5</i> when the agent reaches a goal (terminal state in the code) , a negative reward <i>-10</i> when the agent reaches a trap, otherwise <i>0</i>. In addition, the function provides a step penalty of <i>−0.1</i> given any action.
+
 
 <b>STEP FUNCTION</b>: Implement the <b>step</b> function that takes an action and applies it to the environment. The applied action leads to a stochastic transition to the next state. In details, the <b>step</b> function performs followings:
 - sample a next state according to the transition function,
@@ -41,10 +46,11 @@ Figure 1: An exemplar <i>gridworld</i> environment with available actions. An ag
 - update the current state to the next state, and
 - return a result tuple, (next state, reward, termination signal, information).
 
-<b>TERMINATION</b>: We terminate an episode when an agent is in either goal or trap cells. To deal with the episode termination conditions, you have to implement the <b>is_done()</b> function that returns a Boolean termination signal that is whether the current episode has to be terminated or not.
-Finally, you are ready to make your agent interact with the environment for RL. On your report,
 
-In your report,
+<b>TERMINATION</b>: We terminate an episode when an agent is in either goal or trap cells. To deal with the episode termination conditions, you have to implement the <b>is_done()</b> function that returns a Boolean termination signal that is whether the current episode has to be terminated or not.
+
+
+Finally, you are ready to make your agent interact with the environment for RL. On your report,
 ```
 1. [15 pts] print out the transition probabilities to all the next states given
   • a current state [3, 1] and a selected action “Down”,
@@ -55,11 +61,12 @@ In your report,
 4. [25 pts] attach your implemented code from <b>transition_model()</b>, <b>compute_reward()</b>, <b>step()</b>, and <b>is_done()</b> functions.
 ```
 
-### Problem 2: Convolutional Neural Networks (CNN)
-In this part, implement a convolutional neural network (CNN) on the <b>FashionMNIST</b> dataset for an image classification task. You can now use the [PyTorch](https://pytorch.org/) library for network design and construction. You have to fill your code in the blank section following the “PLACE YOUR CODE HERE” comments in the CNN_problem_2.ipynb file.
+### Problem 2: Dynamic Programming [50 pts]
+In this problem, you implement and analyze a representative DP algorithm: value iteration (VI).
 
-#### 2.1. A CNN with MaxPooling layers
-You must implement a CNN model under the CNN Max() class. The model has a sequential structure:
+#### 2.1. Value Iteration (VI) [30 pts]
+Implement the VI algorithm for the stochastic gridworld environment by filling out the ValueIteration class. The VI algorithm iteratively and directly updates each state value $V_t(s)$ at a time step t given a transition model T:
+
 
 <img src="/Figure/CNN_structure.png" width="50%" height="50%">
 
