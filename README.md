@@ -47,10 +47,10 @@ Figure 1: An exemplar <i>gridworld</i> environment with available actions. An ag
 - return a result tuple, (next state, reward, termination signal, information).
 
 
-<b>TERMINATION</b>: We terminate an episode when an agent is in either goal or trap cells. To deal with the episode termination conditions, you have to implement the <b>is_done()</b> function that returns a Boolean termination signal that is whether the current episode has to be terminated or not.
+<b>TERMINATION</b>: We terminate an episode when an agent is in either goal or trap cells. To deal with the episode termination conditions, you have to implement the <b>is_done()</b> function that returns a Boolean termination signal that is whether the current episode has to be terminated or not. Finally, you are ready to make your agent interact with the environment for RL. 
 
 
-Finally, you are ready to make your agent interact with the environment for RL. On your report,
+On your report,
 ```
 1. [15 pts] print out the transition probabilities to all the next states given
   • a current state [3, 1] and a selected action “Down”,
@@ -69,48 +69,27 @@ Implement the VI algorithm for the stochastic gridworld environment by filling o
 
 <img src="/Figure/equation1.png" width="50%" height="50%">
 
-VI stops to update the values when the maximum update error ∆ is lower than a certain threshold θ, where $∆ ← max(∆, ∥Vt+1(s) − Vt(s)∥) ∀s ∈ S$. (See details on the RL book p.83.) On your report, please
+VI stops to update the values when the maximum update error $∆$ is lower than a certain threshold $θ$, where $∆ ← max(∆, ∥Vt+1(s) − Vt(s)∥) ∀s ∈ S$. (See details on the RL book p.83.) 
 
-where the convolution layer is with bias=True, which needs to be accounted for calculating the number of parameters.
-All other arguments use default values. You will also implement forward and backward passes to optimize CNN by using stochastic gradient descent (SGD) with a momentum method. Note that your test accuracy should be over 90.2% on the test images.
-
-In your report,
+On your report, please
 ```
-• analyze the number of parameters used in each layer and the total number of parameters over the entire model considering the input image size,
-• attach the graph of training and validation accuracies over 30 epochs,
-• attach the capture of the test accuracy on the 10, 000 test images from the ipynb screen.
+• write down the state values of the first 8 states of the gridworld environment1,
+• overlay the best action at each state based on the state-action values,
+• plot the distribution of trajectories produced by the trained policy for 100 episodes, and
+• attach your implemented code from value iteration() and get action() functions on your report.
 ```
 
-#### 2.2. Prevention of Overfitting
-<b>Overfitting</b> happens when your model fits too well to the training set. It then becomes difficult for the model to generalize to new examples that were not in the training set. For example, your model recognizes specific images in your training set instead of general patterns. Your training accuracy will be higher than the accuracy on the validation/test set. To reduce overfitting, you must implement techniques such as followings (but are not limited to) to the CNN model in Problem 2.1:
+#### 2.2. Comparison under different transition models [20 pts]
+Suppose that the probability of taking a random action is 10% (i.e., $ε = 0.1$). This transition model will affect the <b>exploration</b> process of <b>VI</b>. Thus, in this part, you are asked to compare/analyze the effects when you run <b>VI</b> with $ε = 0.1$ and $ε = 0.4$. 
 
-- Batch Normalization
-- Dropout
-- Data Augmentation
-- other methods or tricks
-
-You can decide to set the parameters for the regularizations (e.g. dropout rate).
-
-In your report,
+On your report, please
 ```
-• attach a graph of training-and-validation accuracies over 30 epochs with a selected technique that handles overfitting,
-• report the test accuracy on the 10, 000 test images,
-• compare the results of the CNN model without regularization methods (analyze and explain why the selected technique works for preventing overfitting).
+• plot the expected returns per ε value with respect to the number of iterations until convergence (two graphs or one unified graph),
+• overlaying the best actions at each state per ε value (two visualizations),
+• plot the distribution of trajectories produced by the trained policy for 100 episodes per ε value (two visualizations), and
+• compare/analyze the effect of different ε based on the above results.
 ```
-
-### Problem 3: Comparison of MLP and CNN
-In this problem, you will compare a CNN model with MLP and analyze the performance difference by computing validation accuracies given the Fashion MNIST image dataset. You have to modify the code in the CNN_problem_3.ipynb file.
-
-Compare the validation accuracies of two models:
-
-- A CNN model with MaxPooling layers from Problem 2.1 in this assignment. 
-- An MLP model with ReLU layers (you can modify as you want).
-
-In your report,
-```
-• attach a plot of validation accuracy curves from the two models where the x axis and y axis are the number of training epochs (which is 30) and accuracy, respectively,
-• analyze the results (e.g., why does one model perform better than the other?) within one paragraph.
-```
+<i>Note that analysis does not mean you have to write down a long report. Scientific writing requires a concise delivery of your thoughts/results.</i>
 
 
 ### Results
