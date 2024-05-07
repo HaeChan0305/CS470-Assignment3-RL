@@ -19,7 +19,7 @@
 ### Problem 1: Markov Decision Process [50 pts]
 In this section, you design a Markov decision process (MDP) for a toy environment, called <i>gridworld</i>, which is often used for reinforcement learning (RL). The environment is a stochastic version of the pre-built discrete <i>gridworld</i> environment from <i>OpenAI Gym</i>. In order to represent a task in the environment, you define an MDP, < S,A,T,r,γ >, where S, A, T, r ,and γ are states, actions, transition probabilities, a reward function, and a discount factor, respectively. We particularly use a 8 × 10 size of <i>gridworld</i> environment, where the coordinate of left-top and right-bottom cells are [0,0] and [7,9], respectively. An agent can move onto one of the four nearest cells or stay. Please, fill your code in the blank section following the “PLACE YOUR CODE HERE” comments in the CS470_Assignment3_problem.ipynb file following the subproblems below.
 
-<b>TRANSITION MODEL</b>: Implement a stochastic <b>transition_model()</b> of the environment dynamics. You need to fill out the transition model() function, which returns a list of transition probabilities over the next states given a state and an action. In order to define the transition model, you have to consider following rules:
+<b>TRANSITION MODEL</b>: Implement a stochastic <b>transition_model()</b> of the environment dynamics. You need to fill out the <b>transition_model()</b> function, which returns a list of transition probabilities over the next states given a state and an action. In order to define the transition model, you have to consider following rules:
 
 - The agent has five possible movements: stay, up, down, left, and right (see Fig.1),
 - The agent is not allowed to move off the grid or move on an obstacle (grey); If the agent tries to move off the grid or move on an obstacle, it will end up staying at the previous cell,
@@ -33,25 +33,26 @@ Note that we use predefined ε = 0.05 on the assignment IPython notebook.
 <img src="/Figure/Figure1.png" width="50%" height="50%">
 Figure 1: An exemplar <i>gridworld</i> environment with available actions. An agent cannot move on an obstacle (grey). An episode ends when the agent reaches either a trap (red) cell or a goal (green) cell. In this environment, the cell with index 1 and 78 corresponds to [1, 0] and [6, 9], respectively.
 
-#### 1.1. Convolution and Average Pooling using NumPy
-Implement two simple forward networks as follows:
+<b>REWARD FUNCTION</b>: Design a reward function by filling out the <b>compute_reward(s,a,s’)</b> function, where the arguments represent a current state, an action, and a next state. The function returns a positive reward <i>+5</i> when the agent reaches a goal (terminal state in the code) , a negative reward <i>-10</i> when the agent reaches a trap, otherwise <i>0</i>. In addition, the function provides a step penalty of <i>−0.1</i> given any action.
 
-<img src="/Figure/CNN_architecture.png" width="50%" height="50%">
+<b>STEP FUNCTION</b>: Implement the <b>step</b> function that takes an action and applies it to the environment. The applied action leads to a stochastic transition to the next state. In details, the <b>step</b> function performs followings:
+- sample a next state according to the transition function,
+- calculate a reward value,
+- update the current state to the next state, and
+- return a result tuple, (next state, reward, termination signal, information).
 
-In your report,
-```
-• attach the visualization results and
-• write down your analysis stating the difference between results (Max. 600 characters). 
-Note that you must obtain 6 different visualizations.
-```
-
-#### 1.2. Convolution and Average Pooling using PyTorch
-Implement the above CNN models using PyTorch.
+<b>TERMINATION</b>: We terminate an episode when an agent is in either goal or trap cells. To deal with the episode termination conditions, you have to implement the <b>is_done()</b> function that returns a Boolean termination signal that is whether the current episode has to be terminated or not.
+Finally, you are ready to make your agent interact with the environment for RL. On your report,
 
 In your report,
 ```
-• attach the visualization results and
-• provide whether your implementation using NumPy is the same as that using PyTorch by cal- culating any errors.
+1. [15 pts] print out the transition probabilities to all the next states given
+  • a current state [3, 1] and a selected action “Down”,
+  • a current state [0, 6] and a selected action “Right”,
+  • a current state [3, 5] and a selected action “Right”,
+2. [5 pts] plot the resulting histogram of returns produced by a dummy policy in the IPython notebook for 100 episodes,
+3. [5 pts] plot the distribution of trajectories produced by a dummy policy in the IPython notebook for 300 episodes,
+4. [25 pts] attach your implemented code from <b>transition_model()</b>, <b>compute_reward()</b>, <b>step()</b>, and <b>is_done()</b> functions.
 ```
 
 ### Problem 2: Convolutional Neural Networks (CNN)
